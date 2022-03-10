@@ -22,6 +22,8 @@ foo:
 main:
   - title: "Category"
     url: /categories/
+    - title: "Tag"
+    url: /tags/
   - title: "About"
     url: /about/
   - title: "Sample Posts"
