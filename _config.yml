@@ -103,7 +103,7 @@ analytics:
 # Site Author
 author:
   name             : "SOYOUNG"
-  avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
+  avatar           : "/assets/images/mycat.png"# path of avatar image, e.g. "/assets/images/bio-photo.jpg"
   bio              : "study hard!"
   location         : "south Korea"
   email            :
