@@ -2,7 +2,7 @@
 layout: single
 title:  "Build tool - Gradle과 Maven"
 published: true
-categories: JAVA, Spring
+categories: Spring
 tag: [Java, Spring, Build tool, Gradle, Maven]
 toc: true
 ---

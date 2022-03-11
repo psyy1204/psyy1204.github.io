@@ -2,7 +2,7 @@
 layout: single
 title:  "JAVA_Spring 입문"
 published: true
-categories: JAVA, Spring
+categories: Spring
 tag: [Java, Spring, Spring framework]
 toc: true
 ---
