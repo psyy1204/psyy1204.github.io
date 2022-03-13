@@ -1,6 +1,6 @@
 ---
 layout: single
-title:  "JAVA_Spring 입문"
+title:  "Component Scan"
 published: true
 categories: Spring
 tag: [Java, Spring, Spring framework]
@@ -9,7 +9,7 @@ toc: true
 
 # 컴포넌트 스캔
 
-### 컴포넌트 스캔이란? 
+## 컴포넌트 스캔이란? 
 
 - 스프링이 직접 클래스를 검색해서 빈으로 등록해주는 기능
 - 설정 클래스에 빈으로 등록하지 않아도 원하는 클래스를 빈으로 등록 할 수 있어 설정코드를 줄일 수 있다
@@ -141,10 +141,32 @@ public class AppCtx
 
 * FilterType.ANNOTATION : 필터로 사용할 애노테이션 타입을 값으로 준다. ->예제는 @MannualBean 애노테이션을 제외대상 클래스로 추가했다
 
+* FilterType.ASPECTJ :  AspectJ 패턴을 사용하여 대상을 지정한다.
+
 ```java
 @Configuration
 @ComponentScan(basePackages = { "spring" },
-		excludeFilters = @Filter(type = FilterType.ANNOTATION, classes = {Noproduct.class, ManualBean.class})
+		excludeFilters = @Filter(type = FilterType.ASSIGNABLE_TYPE, classes = MemberDao.class))
 public class AppCtx
 ```
 
+* FilterType.ASSIGNABLE_TYPE :  특정 타입이나 그 하위 타입을 컴포넌트 스캔 대상에서 제외하고 싶을때 사용한다.                   classes 속성에 제외할 타입 목록을 지정한다.
+
+## ComponentScan 스캔 대상
+
+* 다음 애노테이션이 붙은 클래스가 스캔 대상에 포함된다
+  * @Component(org.springframewoork.stereotype pkg)
+  * @Controller(org.springframewoork.stereotype pkg)
+  * @Service(org.springframewoork.stereotype pkg)
+  * @Repository(org.springframewoork.stereotype pkg)
+  * @Aspect(org.aspectj.lang.annoation pkg)
+  * @Configuration(org.springframework.context.annotation pkg)
+
+
+
+## ComponentScan 충돌 처리
+
+### 빈 이름 충돌
+
+* 서로 다른 타입인데 같은 빈 이름을 사용하는 경우가 있다면 둘 중 하나에 명시적으로 빈 이름을 지정하여 충돌을 피해야 한다.
+* 스캔시 사용하는 빈 이름과 수동 등록한 빈 이름이 같을 경우 수동 등록한 빈이 우선한다.
