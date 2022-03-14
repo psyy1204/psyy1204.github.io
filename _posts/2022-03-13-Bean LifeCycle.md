@@ -54,8 +54,6 @@ public class NetworkClient implements InitializingBean, DisposableBean {
 
     public NetworkClient() {
         System.out.println("생성자 호출, url : " + url);
-        connect();
-        call("초기화 연결 메세지");
     }
 
     public void setUrl(String url) {
@@ -85,7 +83,7 @@ public class NetworkClient implements InitializingBean, DisposableBean {
     //DisposableBean 은 destroy() 메서드로 소멸을 지원한다.
     public void destroy() throws Exception {					
         System.out.println("NetworkClient.destroy");
-          disconnect();
+        disconnect();
     }
 }
 ```
@@ -154,7 +152,57 @@ close : http://hello-spring.dev
 - 스프링 빈이 스프링 코드에 의존하지 않는다. 
 - <u>코드가 아니라 설정 정보를 사용하기 때문에 코드를 고칠 수 없는 외부 라이브러리에도 초기화, 종료 메서드를 적용할 수 있다</u>
 
-스프링 빈의 이벤트 라이프사이클 
+```java
+    public void init() throws Exception {				//afterPropertiesSet메서드 변경
+        System.out.println("NetworkClient.init");
+                //의존관계 주입이 끝나면(초기화끝나면) 호출해 주겠다.
+        connect();
+        call("초기화 연결 메세지");
+    }
+
+    public void close(){								//destroy메서드 변경
+        System.out.println("NetworkClient.close");
+        //빈 종료될때 호출
+          disconnect();
+    }
+```
+
+다음과 같이 @Bean 태그에 initMethod, destroyMethod 속성을 사용할 수 있다
+
+```java
+    @Configuration
+    static class LifeCycleConfig {
+        @Bean(initMethod = "init", destroyMethod = "close")
+        public NetworkClient networkClient() {
+            NetworkClient networkClient = new NetworkClient(); //객체생성을 먼저하고
+            networkClient.setUrl("http://hello-spring.dev");   //값이 들어감(Url 세팅)
+            return networkClient;
+        }
+    }
+```
+
+실행결과는 다음과 같다
+
+```java
+생성자 호출, url = null
+NetworkClient.init
+connect: http://hello-spring.dev
+call : http://hello-spring.dev message : 초기화 연결 메세지
+11:56:10.507 [main] DEBUG org.springframework.context.annotation.AnnotationConfigApplicationContext - Closing org.springframework.context.annotation.AnnotationConfigApplicationContext@446293d, started on Mon Mar 14 11:56:10 KST 2022
+NetworkClient.close
+close : http://hello-spring.dev
+```
+
+### 종료 메서드
+
+- @Bean의 destroyMethod 속성에는 특별한 기능이 있다.
+- 라이브러리는 대부분 close, shutdown이라는 메서드의 이름을 사용한다
+- @Bean의 destroyMethod 는 기본값이 (inferred) (추론)으로 등록되어 있다 -> close , shutdown 라는 이름의 메서드를 자동으로 호출한다. 종료메서드를 추론해서 호출한다
+- 따라서 종료메서드는 적어주지 않아도 잘 동작한다
+
+
+
+*스프링 빈의 이벤트 라이프사이클 
 
 스프링 컨테이너 생성 ->스프링 빈 생성 ->의존관계 주입 ->초기화 콜백 ->사용 ->소멸전 콜백-> 스프링 종료(싱글톤 예)
 
@@ -166,3 +214,8 @@ close : http://hello-spring.dev
 
 
 
+[참고]
+
+-초보 웹 개발자를 위한 스프링5 프로그래밍 입문, 최범균 저
+
+-인프런 스프링 핵심원리 강의, 김영한 
