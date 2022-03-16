@@ -291,7 +291,9 @@ public Calculator calculator() {	return new RecCalculator();		}
 //RecCalculator로 변환을 할 수 없어 아래의 코드는 익셉션이 발생한다 
 RecCalculator cal = ctx.getBean("calculator", RecCalculator.class)
 ```
-![proxy](/images/2022-03-16-springDI/proxy.png)
+<img src="/images/2022-03-16-springDI/proxy.png" 
+width="300px" height="200px" title="proxy" alt="proxy">
+
 -> 빈의 실제 타입이 RecCalculator라고 하더라도 "calculator" 이름에 해당하는 빈 객체의 타입은 그림처럼 Calculator 인터페이스를 상속받은 프록시 타입이 된다.
 
 ```java
