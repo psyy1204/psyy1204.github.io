@@ -310,5 +310,124 @@ excution 명시자는  Advice를 적용할 메서드를 지정할 때 사용한�
 
 ``` java
 excution(수식어패턴? 리턴타입패턴 클래스이름패턴?메서드이름패턴(파라미터 패턴))
+//수식어 패턴은 생략이 가능하며 public, protected 등이 온다. 스프링 AOP는 public메서드에만 적용할 수 있기 때문에 public만 의미 있다.
+//각 패턴은 '*'을 이용하여 모든 값을 표현할 수 있다. 또한 '..'(점 두개)를 이용하여 0개 이상이라는 의미를 표현할 수 있다.
 ```
 
+| 사용 예시                                       | 설명                                                         |
+| ----------------------------------------------- | ------------------------------------------------------------ |
+| execution(public void set*(..))                 | 리턴타입 void, 메서드 이름이 set으로 시작, 파라미터 0개 이상인 메서드 호출 |
+| execution(* chap07. * . * ())                   | chap07 패키지에 타입에 속한 파라미터가 없는 모든 메서드 호출 |
+| execution(* chap07..* . * (..))                 | chap07패키지 및 하위 패키지에 있는, 파라미터가 0개 이상인 메서드 호출. 패키지 부분에 '..'을 사용하여 해당 패키지, 하위 패키지 표현 |
+| execution(Long chap07.Calculator.factorial(..)) | 리턴 타입이 Long인 Calculator 타입의 factorial() 메서드 호출 |
+| execution(* get * ( * ))                        | 이름이 get으로 시작하고 파라미터가 한개인 메서드 호출        |
+| execution(* get * ( * , *))                     | 이름이 get으로 시작하고 파라미터가 두개인 메서드 호출        |
+| execution(* read *(Integer, ..))                | 메서드 이름이 read로 시작하고, 첫번째 파라미터 타입이 Integer이며, 한 개 이상의 파라미터를 갖는 메서드 호출 |
+
+### Advice 적용 순서
+
+한 Pointcut에 여러 Advice를 적용할 수도 있다.
+
+```java
+@Aspect
+public class CacheAspect {
+
+    private Map<Long, Object> cache = new HashMap<>();
+
+    @Pointcut("execution(public * chap07..*(long))")
+    //첫번째 인자가 long인 메서드를 대상으로 한다
+    //execute() 메서드는 Calculater의 factorial(long) 메서드에 적용된다.
+    public void cacheTarget() {
+    }
+
+    @Around("cacheTarget()")
+    public Object execute(ProceedingJoinPoint joinPoint) throws Throwable {
+        Long num = (Long) joinPoint.getArgs()[0];   //첫번째 인자를 Long 타입으로 구한다.
+        if(cache.containsKey(num)) {                
+            //키값이 cache에 존재하면 키에 해당하는 값을 구해서 리턴한다.
+            System.out.printf("CacheAspect: Cache 에서 구함[%d]\n", num);
+            return cache.get(num);
+        }
+
+        Object result = joinPoint.proceed(        
+            //위에서 구한 키값이 cache에 존재하지 않으면 프록시 대상 객체를 실행
+        cache.put(num, result);            //프록시 대상 객체를 실행한 결과를 cache에 추가한다
+        System.out.printf("CacheAspect: Cache에 추가[%d]\n",num);
+        return result;                              //프록시 대상 객체의 실행결과를 리턴한다.
+    }
+}
+```
+
+-> 설정클래스에 두개의 Aspectf를 추가할 수 있다.
+
+```java
+@Configuration
+@EnableAspectJAutoProxy
+// -> 스프링이 @Aspect가 붙은 빈 객체를 찾아서 빈 객체의 @Pointcut과 @Around를 사용한다.
+public class AppCtxWithCache {
+    @Bean
+    public CacheAspect cacheAspect() {
+        return new CacheAspect();
+    }
+
+    @Bean
+    public ExeTimeAspect exeTimeAspect() {
+        return new ExeTimeAspect();
+    }
+
+    @Bean
+    public Calculator calculator() {
+        return new RecCalculator();
+    }
+}
+```
+
+->설정클래스를 이용하는 코드를 작성한다.
+
+```java
+public class MainAspectWithCache {
+
+    public static void main(String[] args) {
+        AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(AppCtxWithCache.class);
+
+        Calculator cal = ctx.getBean("calculator", Calculator.class);
+        cal.factorial(7);
+        cal.factorial(7);
+        cal.factorial(5);
+        cal.factorial(5);
+        ctx.close();
+    }
+}
+
+//실행결과
+RecCalculator.factorial([7]) 실행 시간 : 16800 ns 
+    //RecCalculator.factorial([7])은 ExeTimeAspect가 출력
+    //Cache에 추가,Cache 에서 구함 메세지는 CacheAspect가 출력
+CacheAspect: Cache에 추가[7]			//ExeTimeAspect, CacheAspect가 모두 적용된 결과
+CacheAspect: Cache 에서 구함[7]			//CacheAspect만 적용된 결과
+RecCalculator.factorial([5]) 실행 시간 : 3900 ns
+CacheAspect: Cache에 추가[5]
+CacheAspect: Cache 에서 구함[5]
+```
+
+Advice가 다음과 같이 적용되었다
+
+- CacheAspect프록시 -> ExeTimeAspect 프록시 -> 실제 대상 객체
+
+
+
+어떤 Aspect가 먼저 적용될지 스프링 프레임워크나 자바 버전에 따라 달라질수 있어, 적용순서가 중요하다면 직접 순서를 지정해야한다. **@Order**를 사용하면된다. 값이 작을수록 먼저 적용한다.
+
+```java
+@Aspect
+@Order(1)
+public class ExeTimeAspect
+
+@Aspect
+@Order(2)
+public class CacheAspect
+```
+
+적용 순서
+
+- ExeTimeAspect 프록시 -> CacheAspect프록시 -> 실제 대상 객체
