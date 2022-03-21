@@ -22,20 +22,20 @@ mysql -u [계정ID] -p [계정PW] [DB 이름];
 
 #### DB 종료
 
-```mysql
+```java
 exit;
 quit;
 ```
 
 #### 기본 정보 확인
 
-```mysql
+```java
 status;
 ```
 
 #### 에러, 경고 메세지 재확인
 
-```mysql
+```java
 show errors;
 show warnings;
 ```
@@ -46,31 +46,31 @@ show warnings;
 
  #### DB 생성
 
-```mysql
+```java
 create database [DB명];
 ```
 
 #### DB 목록 확인
 
-```mysql
+```java
 show databases;
 ```
 
 #### DB 선택하기
 
-```mysql
+```java
 use [DB명];
 ```
 
 #### 사용중인 DB 출력
 
-```mysql
+```java
 select databases();
 ```
 
 #### DB 삭제
 
-```mysql
+```java
 drop database [DB명];
 ```
 
@@ -80,20 +80,20 @@ drop database [DB명];
 
 #### 테이블 생성
 
-```mysql
+```java
 create table [테이블 이름]([열 이름] INT(5), [열 이름] VARCHAR(10), 데이터 타입 참조하기);
 create table [테이블 이름](colmun_name1 INT(5), colmun_name2  VARCHAR(10));
 ```
 
 #### 테이블 목록 확인
 
-```mysql
+```java
 show tables;
 ```
 
 #### 테이블 구조 확인
 
-```mysql
+```java
 explain [테이블 이름];
 describe [테이블 이름];
 desc [테이블 이름];
@@ -102,13 +102,13 @@ show index from [테이블 이름];
 
 #### 테이블명 변경
 
-```mysql
+```java
 rename table [테이블명] to [변경할 테이블명];
 ```
 
 #### 테이블 삭제
 
-```mysql
+```java
 drop table [테이블명];
 ```
 
@@ -118,14 +118,14 @@ drop table [테이블명];
 
 #### 데이터 입력
 
-```mysql
+```java
 insert into [테이블명] values(값1, 값2, ...);
 insert into [테이블명](colmun_name1, colmun_name2, ...) values(값1, 값2, ...);
 ```
 
 #### 데이터 수정
 
-```mysql
+```java
 update [테이블명] set [열 이름2]='값2' where [열 이름1]='값1';
 ```
 
@@ -135,7 +135,7 @@ update [테이블명] set [열 이름2]='값2' where [열 이름1]='값1';
 
 #### 데이터 삭제
 
-```mysql
+```java
 delete from [테이블명];
 //데이터 전체 삭제
 delete from [테이블명] where [조건 열]='조건 데이터 값';
@@ -144,14 +144,14 @@ delete from [테이블명] where [조건 열]='조건 데이터 값';
 
 #### 데이터 검색
 
-```mysql
+```java
 select * from [테이블명];
 select [필드 이름1, 필드 이름2] from 테이블명;
 ```
 
 #### 데이터 검색 조건
 
-```mysql
+```java
 select * from 테이블명 where 조건;
 select * from [테이블명] where [필드 이름] = '10';
 //[필드 이름] 값이 10 인 데이터 검색
@@ -167,7 +167,7 @@ select * from [테이블명] where [필드 이름] like '%A%';
 
 #### 데이터 정렬
 
-```mysql
+```java
 select * from [테이블 이름] order by [필드 이름]
 //필드 이름 기준 오름차순 정렬
 select * from [테이블 이름] order by [필드 이름] desc
@@ -176,7 +176,7 @@ select * from [테이블 이름] order by [필드 이름] desc
 
 #### 일정 데이터 출력
 
-```mysql
+```java
 select * from [테이블 이름] [필드 이름] asc limit [시작 번호], [검색할 데이터 개수];
 ```
 
@@ -186,19 +186,19 @@ select * from [테이블 이름] [필드 이름] asc limit [시작 번호], [검
 
 #### 유저 리스트 보기
 
-```mysql
+```java
 select user, host from mysql.user;
 ```
 
 #### 유저 추가하기
 
-```mysql
+```java
 create user '유저ID'@'localhost' identified by '유저암호';
 ```
 
 #### 유저 권한 부여
 
-```mysql
+```java
 grant all on *.* to '유저ID'@'localhost';
 grant all on [DB이름].* to '유저ID'@'localhost';
 grant all on [DB이름].* to '유저ID'@'%'; // 외부 호스트
@@ -206,7 +206,7 @@ grant all on [DB이름].* to '유저ID'@'%'; // 외부 호스트
 
 #### 유저 삭제
 
-```mysql
+```java
 delete from user where user = '유저ID';
 flust privileges;
 ```
