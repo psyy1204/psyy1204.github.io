@@ -1,0 +1,14 @@
+---
+layout: single
+title:  "병원스케쥴 프로젝트 3주차-도메인 구상하기"
+published: true
+categories: PROJECT
+tag: [Java_project]
+toc: true
+---
+
+# Domain
+
+그려본 ERD에 맞춰 필요한 도메인들을 생성했다.
+관계에 대한 부분이 어려워 한번 정리가 필요할 것 같다 ㅜ.ㅜ
+만들다 보니 부족한것들이 많이 보여 추가적으로 ERD도 수정했다! 
