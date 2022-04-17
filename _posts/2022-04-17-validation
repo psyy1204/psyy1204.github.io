@@ -76,6 +76,8 @@ public String addItem(@ModelAttribute Item item, RedirectAttributes redirectAttr
 ## 스프링이 제공하는 검증방법 이용
 
 ### BindingResult
+* BindingResult : 스프링이 제공하는 검증 오류를 보관하는 객체이다. 검증 오류가 발생하면 여기에 보관하면 된다.
+
 * 컨트롤러를 다음과 같이 변경한다.
 ```java
 @PostMapping("/add")
@@ -115,3 +117,9 @@ public String addItemV1(@ModelAttribute Item item, BindingResult bindingResult,
         </div>
 ```
  다음과 같이 간단해 진다!
+
+ ### 타임리프 스프링 검증 오류 통합기능
+
+- #fields : #fields 로 BindingResult 가 제공하는 검증 오류에 접근할 수 있다.
+- th:errors : 해당 필드에 오류가 있는 경우에 태그를 출력한다. th:if 의 편의 버전이다.
+- th:errorclass : th:field 에서 지정한 필드에 오류가 있으면 class 정보를 추가한다.
