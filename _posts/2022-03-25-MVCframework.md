@@ -1,6 +1,6 @@
 ---
 layout: single
-title:  "스프링 MVC 프레임워크 동작 방식"
+title:  "[Spring] 스프링 MVC 프레임워크 동작 방식"
 published: true
 categories: Spring
 tag: [Java, Spring, Spring framework]

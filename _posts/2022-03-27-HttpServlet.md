@@ -1,6 +1,6 @@
 ---
 layout: single
-title:  "HttpServlet"
+title:  "[Spring] HttpServlet"
 published: true
 categories: Spring
 tag: [Java, Spring, Spring framework]

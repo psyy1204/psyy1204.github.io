@@ -1,6 +1,6 @@
 ---
 layout: single
-title:  "Validation"
+title:  "[Spring] Validation"
 published: true
 categories: Spring
 tag: [Java, Spring, Spring framework]
