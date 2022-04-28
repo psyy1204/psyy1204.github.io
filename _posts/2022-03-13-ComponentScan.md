@@ -1,6 +1,6 @@
 ---
 layout: single
-title:  "Component Scan"
+title:  "[Spring] Component Scan"
 published: true
 categories: Spring
 tag: [Java, Spring, Spring framework]

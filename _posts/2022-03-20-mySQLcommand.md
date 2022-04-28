@@ -1,6 +1,6 @@
 ---
 layout: single
-title:  "mySQL 명령어 정리"
+title:  "[DB] mySQL 명령어 정리"
 published: true
 categories: DataBase
 tag: [DB, mySQL]

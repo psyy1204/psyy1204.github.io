@@ -1,6 +1,6 @@
 ---
 layout: single
-title:  "Bean LifeCycle"
+title:  "[Spring] Bean LifeCycle"
 published: true
 categories: Spring
 tag: [Java, Spring, Spring framework]

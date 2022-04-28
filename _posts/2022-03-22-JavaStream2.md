@@ -1,6 +1,6 @@
 ---
 layout: single
-title:  "자바 Stream 활용"
+title:  "[JAVA] 자바 Stream 활용"
 published: true
 categories: JAVA
 tag: [Java, java_lambda]
@@ -30,7 +30,7 @@ List<Integer> evenNumbers = numbers.stream()
         .filter(i -> i % 2 == 0)
         .distinct()        //한개의 요소만
         .collect(Collectors.toList());
-```    
+```
 ## 슬라이싱
 
 ### predicate 이용
@@ -45,12 +45,12 @@ Stream.of(2,4,3,4,5,6,7)
 
 #### dropWhile
  takeWhile의 나머지 요소를 찾을 수 있다. 즉 프레디케이트가 거짓이 되면 그 지점에서 작업을 중단하고 남은 요소를 반환한다
- 
+
  ```java
 Stream.of(2,4,3,4,5,6,7,8,9)
         .dropWhile(n -> n%2 == 0)
         .forEach(System.out::println); //3,4,5,6,7
-```
+ ```
 
 ### 스트림 축소 
  주어진 값 이하의 크기를 갖는 새로운 스트림을 반환하는 limit(n) 메서드를 지원한다.
@@ -60,7 +60,7 @@ Stream.of(1,2,3,4,5,6,7)
         .filter(i -> i > 2)
         .limit(2)                       //요소 2개를 반환한다
         .forEach(System.out::println);  //3,4
-```
+ ```
 
 ### 요소 건너뛰기
  처음 n개 요소를 제외한 스트림을 반환하는 skip(n) 메서드를 지원한다.
@@ -70,7 +70,7 @@ Stream.of(1,2,3,4,5,6,7)
         .filter(i -> i > 2)
         .skip(2)                        //2보다 큰 2개의 요소를 건너뜀
         .forEach(System.out::println);  //5,6,7
-```
+ ```
 
 ### 매핑
 ### 스트림 각 요소에 함수 적용하게
@@ -164,5 +164,6 @@ Optional<Integer> first =
  스트림 요소를 조합하여 더 복잡한 질의를 수행할 수 있다. 이러한 질의를 수행하기 위해 Integer 같은 결과가 나올 때까지 스트림의 모든 요소를 반복적으로 처리해야하는데 이를 리듀싱 연산이라고 한다
 
 #### 요소의 합
+
 
 

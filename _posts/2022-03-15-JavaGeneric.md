@@ -1,6 +1,6 @@
 ---
 layout: single
-title:  "자바 제네릭(Generic)"
+title:  "[JAVA] 자바 제네릭(Generic)"
 published: true
 categories: JAVA
 tag: [Java]

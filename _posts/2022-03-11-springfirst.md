@@ -1,6 +1,6 @@
 ---
 layout: single
-title:  "JAVA_Spring 입문"
+title:  "[Spring] JAVA_Spring 입문"
 published: true
 categories: Spring
 tag: [Java, Spring, Spring framework]

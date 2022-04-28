@@ -1,6 +1,6 @@
 ---
 layout: single
-title:  "동작 파라미터화 코드 전달하기"
+title:  "[JAVA] 동작 파라미터화 코드 전달하기"
 published: true
 categories: JAVA
 tag: [Java, java_lambda]
@@ -23,7 +23,7 @@ toc: true
 - 사과의 색을 정의하는 Color enum
 
 ```java
-public enum Color {    RED, GREEN	}
+public enum Color {   RED, GREEN	}
 ```
 
 - 녹색 사과 선택을 위한 조건을 명시한 클래스

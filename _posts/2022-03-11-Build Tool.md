@@ -1,6 +1,6 @@
 ---
 layout: single
-title:  "Build tool - Gradle과 Maven"
+title:  "[JAVA] Build tool - Gradle과 Maven"
 published: true
 categories: Spring
 tag: [Java, Spring, Build tool, Gradle, Maven]

@@ -1,6 +1,6 @@
 ---
 layout: single
-title:  "Spring Bean"
+title:  "[Spring] Spring Bean"
 published: true
 categories: Spring
 tag: [Java, Spring, SpringBean]

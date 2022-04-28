@@ -1,6 +1,6 @@
 ---
 layout: single
-title:  "자바 Stream"
+title:  "[JAVA] 자바 Stream"
 published: true
 categories: JAVA
 tag: [Java, java_lambda]

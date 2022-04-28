@@ -1,6 +1,6 @@
 ---
 layout: single
-title:  "스프링 AOP"
+title:  "[Spring] 스프링 AOP"
 published: true
 categories: JAVA
 tag: [Java, Spring, Spring framework]
